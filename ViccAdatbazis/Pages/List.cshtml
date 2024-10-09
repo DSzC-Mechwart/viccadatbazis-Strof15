@@ -1,0 +1,52 @@
+﻿@page
+@model ViccAdatbazis.Pages.ListModel
+
+@{
+    ViewData["Title"] = "List";
+}
+<h1>List</h1>
+
+<p>
+    <a asp-page="Create">Create New</a>
+</p>
+
+@if (Model.Vicc == null || !Model.Vicc.Any())
+{
+    <p>No jokes available.</p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>@Html.DisplayNameFor(model => model.Vicc[0].Tartalom)</th>
+                <th>@Html.DisplayNameFor(model => model.Vicc[0].Feltolto)</th>
+                <th>@Html.DisplayNameFor(model => model.Vicc[0].Tetszik)</th>
+                <th>@Html.DisplayNameFor(model => model.Vicc[0].NemTetszik)</th>
+                <th>@Html.DisplayNameFor(model => model.Vicc[0].Aktiv)</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Vicc)
+            {
+                <tr>
+                    <td>@Html.DisplayFor(modelItem => item.Tartalom)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Feltolto)</td>
+                    <td>
+                        <button class="btn btn-success like-button" asp-controller="ViccController" data-id="@item.Id">Like (@item.Tetszik)</button>
+                    </td>
+                    <td>
+                        <button class="btn btn-danger dislike-button" data-id="@item.Id">Dislike (@item.NemTetszik)</button>
+                    </td>
+                    <td>@Html.DisplayFor(modelItem => item.Aktiv)</td>
+                    <td>
+                        <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
+                        <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
+                        <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
